@@ -7,6 +7,171 @@ export interface FileNode {
   children?: FileNode[];
 }
 
+// --- Error Handling Types ---
+
+export enum ErrorSeverity {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  CRITICAL = 'critical'
+}
+
+export enum ErrorCategory {
+  NETWORK = 'network',
+  API = 'api',
+  AUTHENTICATION = 'authentication',
+  AUTHORIZATION = 'authorization',
+  VALIDATION = 'validation',
+  CONFIGURATION = 'configuration',
+  RUNTIME = 'runtime',
+  RESOURCE = 'resource',
+  TIMEOUT = 'timeout',
+  UNKNOWN = 'unknown'
+}
+
+export interface ErrorContext {
+  component?: string;
+  action?: string;
+  userId?: string;
+  sessionId?: string;
+  timestamp: Date;
+  userAgent?: string;
+  url?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface AppError {
+  id: string;
+  message: string;
+  code?: string;
+  category: ErrorCategory;
+  severity: ErrorSeverity;
+  context: ErrorContext;
+  originalError?: Error;
+  stack?: string;
+  retryable: boolean;
+  userMessage: string;
+  suggestedActions?: string[];
+  technicalDetails?: string;
+  timestamp: Date;
+}
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+  error: AppError | null;
+  errorInfo?: {
+    componentStack: string;
+  };
+}
+
+export interface ErrorOverlayProps {
+  error: AppError;
+  onRetry?: () => void;
+  onDismiss?: () => void;
+  onReport?: () => void;
+}
+
+export interface ErrorPageProps {
+  error: AppError;
+  onRetry?: () => void;
+  onGoHome?: () => void;
+}
+
+export interface NetworkErrorDetails {
+  status?: number;
+  statusText?: string;
+  url?: string;
+  method?: string;
+  timeout?: boolean;
+  responseSize?: number;
+  responseTime?: number;
+}
+
+export interface APIErrorDetails {
+  endpoint: string;
+  method: string;
+  statusCode: number;
+  responseBody?: any;
+  requestBody?: any;
+  headers?: Record<string, string>;
+}
+
+export interface ValidationErrorDetails {
+  field: string;
+  value: any;
+  rule: string;
+  expected?: any;
+}
+
+export interface AuthErrorDetails {
+  provider?: string;
+  redirectUrl?: string;
+  tokenExpired?: boolean;
+  permissions?: string[];
+}
+
+export interface ConfigurationErrorDetails {
+  missingVars: string[];
+  invalidVars: string[];
+  environment: string;
+}
+
+export interface ResourceErrorDetails {
+  resource: string;
+  available: number;
+  required: number;
+  limit: number;
+}
+
+// Error action types
+export type ErrorAction =
+  | { type: 'RETRY'; payload?: any }
+  | { type: 'DISMISS' }
+  | { type: 'REPORT'; payload: { userFeedback?: string } }
+  | { type: 'RESET' }
+  | { type: 'NAVIGATE'; payload: string };
+
+// Error recovery strategies
+export enum RecoveryStrategy {
+  RETRY = 'retry',
+  REFRESH = 'refresh',
+  RELOAD = 'reload',
+  REDIRECT = 'redirect',
+  FALLBACK = 'fallback',
+  IGNORE = 'ignore'
+}
+
+export interface ErrorRecovery {
+  strategy: RecoveryStrategy;
+  delay?: number;
+  maxRetries?: number;
+  fallbackData?: any;
+  redirectUrl?: string;
+}
+
+// Error reporting
+export interface ErrorReport {
+  error: AppError;
+  userFeedback?: string;
+  userInfo: {
+    id?: string;
+    email?: string;
+    plan?: string;
+  };
+  systemInfo: {
+    browser: string;
+    os: string;
+    screenSize: string;
+    timezone: string;
+    language: string;
+  };
+  sessionInfo: {
+    duration: number;
+    actions: string[];
+    lastAction: string;
+  };
+}
+
 export type FileSystem = {
   [path: string]: string;
 };
