@@ -1,0 +1,7 @@
+{
+  "name": "AI React IDE",
+  "description": "A web-based Integrated Development Environment that acts as a specialized, AI-powered co-pilot for React engineers, enabling the generation, refactoring, and management of entire multi-file React applications through a sophisticated, conversational interface.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
