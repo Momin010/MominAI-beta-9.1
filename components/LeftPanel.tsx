@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChatMessage, AiProvider } from '../types';
-import { ArrowUpIcon, PlusIcon, CodeBracketIcon } from './icons/Icons';
+import { ArrowUpIcon, PlusIcon, CodeBracketIcon, MicrophoneIcon, XCircleIcon } from './icons/Icons';
 import AiProviderDropdown from './AiProviderDropdown';
 import { fileToBase64 } from '../utils/fileUtils';
 import { MessageStream } from './MessageStream';
