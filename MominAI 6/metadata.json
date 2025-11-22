@@ -1,0 +1,7 @@
+{
+  "name": "MominAI Coding Agent",
+  "description": "An AI-powered coding agent that builds and modifies web applications based on your prompts. It uses the Gemini API with function calling to plan, reason, and manipulate a virtual file system, providing a code editor and a live preview of the generated application.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
